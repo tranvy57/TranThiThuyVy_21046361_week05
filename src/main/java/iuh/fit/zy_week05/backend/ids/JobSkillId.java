@@ -1,24 +1,32 @@
-package iuh.fit.zy_week05.entities;
+package iuh.fit.zy_week05.backend.ids;
 
+import iuh.fit.zy_week05.backend.entities.Job;
+import iuh.fit.zy_week05.backend.entities.Skill;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Embeddable
 public class JobSkillId implements Serializable {
     private static final long serialVersionUID = -425352920139142762L;
-    @Column(name = "job_id", nullable = false)
-    private Long jobId;
+    @ManyToOne
+    @JoinColumn(name = "job_id", nullable = false)
+    private Job jobId;
 
-    @Column(name = "skill_id", nullable = false)
-    private Long skillId;
+    @ManyToOne
+    @JoinColumn(name = "skill_id", nullable = false)
+    private Skill skillId;
 
     @Override
     public boolean equals(Object o) {

@@ -1,9 +1,12 @@
-package iuh.fit.zy_week05.entities;
+package iuh.fit.zy_week05.backend.entities;
 
+import com.neovisionaries.i18n.CountryCode;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -21,7 +24,7 @@ public class Address {
     private String city;
 
     @Column(name = "country")
-    private Short country;
+    private CountryCode country;
 
     @Column(name = "number", length = 20)
     private String number;

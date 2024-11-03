@@ -1,9 +1,12 @@
-package iuh.fit.zy_week05.entities;
+package iuh.fit.zy_week05.backend.entities;
 
+import iuh.fit.zy_week05.backend.enums.SkillType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -20,7 +23,6 @@ public class Skill {
     @Column(name = "skill_name")
     private String skillName;
 
-    @Column(name = "type")
-    private Byte type;
-
+    @Enumerated(EnumType.ORDINAL)
+    private SkillType type;
 }

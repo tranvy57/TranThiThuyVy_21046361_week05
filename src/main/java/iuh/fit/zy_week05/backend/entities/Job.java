@@ -1,9 +1,11 @@
-package iuh.fit.zy_week05.entities;
+package iuh.fit.zy_week05.backend.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -22,6 +24,6 @@ public class Job {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company")
-    private iuh.fit.zy_week05.Company company;
+    private Company company;
 
 }

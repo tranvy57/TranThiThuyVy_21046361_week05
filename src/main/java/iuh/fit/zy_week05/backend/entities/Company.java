@@ -1,9 +1,11 @@
-package iuh.fit.zy_week05.entities;
+package iuh.fit.zy_week05.backend.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -31,6 +33,6 @@ public class Company {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "address", nullable = false)
-    private iuh.fit.zy_week05.Address address;
+    private Address address;
 
 }
