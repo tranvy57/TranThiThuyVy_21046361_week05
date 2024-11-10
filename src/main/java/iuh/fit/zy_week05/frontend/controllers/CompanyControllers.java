@@ -74,10 +74,10 @@ public class CompanyControllers {
 
 
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/createJob", method = RequestMethod.POST)
     public ModelAndView createJob(@ModelAttribute Job job){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("job/create-job");
+        modelAndView.setViewName("company/create-job");
         return modelAndView;
     }
 }

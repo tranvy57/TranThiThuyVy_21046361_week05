@@ -25,4 +25,6 @@ public class Skill {
 
     @Enumerated(EnumType.ORDINAL)
     private SkillType type;
+
+
 }
