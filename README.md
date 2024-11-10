@@ -1,7 +1,7 @@
-# Z-work
+# Z-works
 *(Đang trong quá trình phát triển)*
 ## Tổng quan 
-Z-work là một nền tảng tuyển dụng công việc được xây dựng bằng Java và Spring Boot. Nó giúp các công ty đăng tin tuyển dụng và quản lý hiệu quả quy trình tuyển chọn ứng viên.
+Z-works là một nền tảng tuyển dụng công việc được xây dựng bằng Java và Spring Boot. Nó giúp các công ty đăng tin tuyển dụng và quản lý hiệu quả quy trình tuyển chọn ứng viên.
 
 ## Công nghệ sử dụng
 - Java
@@ -9,7 +9,7 @@ Z-work là một nền tảng tuyển dụng công việc được xây dựng b
 - Gradle
 - Thymeleaf
 - Bootstrap
-- MySQL
+- MariaDB
 
 ## Cài đặt
 - Clone repository về máy.
