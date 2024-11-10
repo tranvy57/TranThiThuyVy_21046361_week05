@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CompanyRepository extends JpaRepository<Company, Long> {
     Company findCompanyById(Long id);
     Page<Company> findAll(Pageable pageable);
+    Company findCompanyByEmail(String email);
 }

@@ -58,22 +58,23 @@
 </head>
 <body>
 <div class="container">
-    <!-- Company Details Section -->
-    <div class="company-details">
-        <h2 class="company-name" th:text="${company.compName}"></h2>
-        <p class="text-muted">
-            <strong>City: </strong><span th:text="${company.address.city}"></span>
-        </p>
-        <p class="text-muted">
-            <strong>Phone: </strong><span th:text="${company.phone}"></span>
-        </p>
-        <p class="text-muted">
-            <strong>Email: </strong><span th:text="${company.email}"></span>
-        </p>
-        <p class="text-muted">
-            <strong>About: </strong><span th:text="${company.about}"></span>
-        </p>
-    </div>
+
+    <div th:replace="menu/companyMenu.html"></div>
+<!--    <div class="company-details">-->
+<!--        <h2 class="company-name" th:text="${company.compName}"></h2>-->
+<!--        <p class="text-muted">-->
+<!--            <strong>City: </strong><span th:text="${company.address.city}"></span>-->
+<!--        </p>-->
+<!--        <p class="text-muted">-->
+<!--            <strong>Phone: </strong><span th:text="${company.phone}"></span>-->
+<!--        </p>-->
+<!--        <p class="text-muted">-->
+<!--            <strong>Email: </strong><span th:text="${company.email}"></span>-->
+<!--        </p>-->
+<!--        <p class="text-muted">-->
+<!--            <strong>About: </strong><span th:text="${company.about}"></span>-->
+<!--        </p>-->
+<!--    </div>-->
 
     <!-- Job List Section -->
     <h2 class="job-list-title">Danh sách công việc công ty tuyển dụng</h2>

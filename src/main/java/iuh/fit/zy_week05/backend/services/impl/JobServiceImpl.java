@@ -28,5 +28,10 @@ public class JobServiceImpl implements JobService {
         return jobRepository.findAll(pageRequest);
     }
 
+    @Override
+    public Job saveJob(Job job) {
+        return jobRepository.save(job);
+    }
+
 
 }

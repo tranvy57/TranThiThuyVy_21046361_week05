@@ -64,7 +64,8 @@
 </head>
 <body>
 <div class="container">
-    <h1>Chào mừng, <span th:text="${session.loggedInUser}">User</span>!</h1>
+
+    <div th:replace="menu/companyMenu.html"></div>
     <p class="text-center">Chào mừng bạn đến với Z-work!</p>
     <p class="text-center">Danh sách các công việc mới nhất:</p>
 

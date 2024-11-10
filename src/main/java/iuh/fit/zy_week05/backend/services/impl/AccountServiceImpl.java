@@ -22,6 +22,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account login(String email, String password) {
-        return accountRepository.findAccountByUsernameAndPassword(email, password).orElse(null);
+        return accountRepository.findAccountByUsernameAndPassword(email, password);
     }
 }

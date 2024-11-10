@@ -26,6 +26,8 @@ public class AccountController {
     AccountService accountService;
     @Autowired
     JobService jobService;
+
+    @Autowired
     CompanyService companyService;
     @RequestMapping("login")
     public ModelAndView login(@RequestParam("username") Optional<String> username,
@@ -38,8 +40,9 @@ public class AccountController {
            modelAndView.addObject("error", "Sai tên đăng nhập hoặc mật khẩu");
            modelAndView.setViewName("index");
         }else{
-            session.setAttribute("loggedInUser", username);
-            modelAndView.setViewName("trangchu");
+            Company company = companyService.getCompanyByEmail(username.get());
+            session.setAttribute("loggedInUser", company);
+            modelAndView.setViewName("redirect:/companies");
 
 
             int currentPage = 1;

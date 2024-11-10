@@ -8,4 +8,5 @@ import java.util.List;
 public interface JobService {
     Page<Job> getJobsByCompanyId(Long companyId, int pageNo, int pageSize);
     Page<Job> getAllJobs(int pageNo, int pageSize);
+    Job saveJob(Job job);
 }

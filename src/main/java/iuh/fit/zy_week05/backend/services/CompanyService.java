@@ -9,4 +9,5 @@ import java.util.List;
 public interface CompanyService {
     Page<Company> getAllCompanies(int pageNo, int pageSize);
     Company getCompanyById(Long id);
+    Company getCompanyByEmail(String email);
 }
