@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Job by Company</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+        .container {
+            margin: auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .company-details {
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+        .company-name {
+            color: #2c3e50;
+            font-size: 1.6em;
+            margin: 0 0 10px;
+        }
+        .job-list-title {
+            margin-top: 20px;
+            color: #333;
+            font-size: 1.4em;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .job-card {
+            flex: 1 1 calc(33.33% - 20px); /* 3 columns */
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+        .job-title {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin: 0 0 10px;
+        }
+        .skill-badge {
+            background-color: #e0f7fa;
+            color: #00796b;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .pagination {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Company Details Section -->
+    <div class="company-details">
+        <h2 class="company-name" th:text="${company.compName}"></h2>
+        <p class="text-muted">
+            <strong>City: </strong><span th:text="${company.address.city}"></span>
+        </p>
+        <p class="text-muted">
+            <strong>Phone: </strong><span th:text="${company.phone}"></span>
+        </p>
+        <p class="text-muted">
+            <strong>Email: </strong><span th:text="${company.email}"></span>
+        </p>
+        <p class="text-muted">
+            <strong>About: </strong><span th:text="${company.about}"></span>
+        </p>
+    </div>
+
+    <!-- Job List Section -->
+    <h2 class="job-list-title">Danh sách công việc công ty tuyển dụng</h2>
+
+    <div class="d-flex flex-wrap" style="gap: 20px;">
+        <div th:each="job : ${jobPage}" class="job-card">
+            <h3 class="job-title" th:text="${job.jobName}"></h3>
+            <p th:text="${job.jobDesc}" class="text-muted"></p>
+            <div class="d-flex flex-wrap" style="gap: 8px;">
+                <div th:each="skill: ${job.jobSkills}" class="skill-badge">
+                    <span th:text="${skill.id.skillId.skillName}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination" th:if="${jobPage.totalPages > 1}">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                    <a th:href="@{/company/{id}(id=${company.id}, size=${jobPage.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"
+                       class="page-link"
+                       th:classappend="${pageNumber == jobPage.number + 1} ? 'active'"
+                       aria-current="page"></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+</body>
+</html>

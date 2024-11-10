@@ -35,4 +35,8 @@ public class Company {
     @JoinColumn(name = "address", nullable = false)
     private Address address;
 
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "address", nullable = false)
+    private Account account;
+
 }

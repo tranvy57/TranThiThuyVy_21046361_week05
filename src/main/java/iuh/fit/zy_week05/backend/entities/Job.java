@@ -1,7 +1,10 @@
 package iuh.fit.zy_week05.backend.entities;
 
+import iuh.fit.zy_week05.backend.ids.JobSkillId;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -25,5 +28,10 @@ public class Job {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company")
     private Company company;
+
+
+    @OneToMany(mappedBy = "id.jobId", fetch = FetchType.EAGER)
+    private List<JobSkill> jobSkills;
+
 
 }
