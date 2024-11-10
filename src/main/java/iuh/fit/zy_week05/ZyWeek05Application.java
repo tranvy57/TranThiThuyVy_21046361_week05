@@ -4,6 +4,7 @@ import com.neovisionaries.i18n.CountryCode;
 import iuh.fit.zy_week05.backend.entities.*;
 import iuh.fit.zy_week05.backend.enums.SkillLevel;
 import iuh.fit.zy_week05.backend.enums.SkillType;
+import iuh.fit.zy_week05.backend.enums.UserType;
 import iuh.fit.zy_week05.backend.ids.JobSkillId;
 import iuh.fit.zy_week05.backend.repositories.*;
 import net.datafaker.Faker;
@@ -32,6 +33,8 @@ public class ZyWeek05Application {
 	CandidateRepository candidateRepository;
 	@Autowired
 	CandidateSkillRepository candidateSkillRepository;
+	@Autowired
+	AccountRepository accountRepository;
 
 
 
@@ -56,12 +59,21 @@ public class ZyWeek05Application {
 //							.address(saveAdd)
 //							.phone(faker.phoneNumber().cellPhone())
 //							.email(faker.internet().emailAddress())
-//							.webUrl(faker.internet().url())
-//							.build();
+//							.webUrl(faker.internet().url())							.build();
 //
+//					Account account = Account.builder()
+//							.username(company.getEmail())
+//							.password("1234")
+//							.userType(UserType.COMPANY)
+//							.build();
+//					Account savedAccount = accountRepository.save(account);
+//
+//					company.setAccount(savedAccount);
 //					Company saveComp = companyRepository.save(company);
 //
-//					for (int j = 0; j < 10; j++) {
+//
+//
+//					for (int j = 0; j < 3; j++) {
 //						Job job = Job.builder()
 //								.company(saveComp)
 //								.jobName(faker.job().position())
@@ -69,25 +81,27 @@ public class ZyWeek05Application {
 //								.build();
 //						Job saveJob = jobRepository.save(job);
 //
-//						Skill skill = Skill.builder()
-//								.skillName(faker.job().keySkills())
-//								.skillDescription(faker.job().keySkills())
-//								.type(SkillType.TECHNICAL_SKILL)
-//								.build();
-//						Skill saveSkill = skillRepository.save(skill);
+//						for (int k = 0; k<3; k++){
+//							Skill skill = Skill.builder()
+//									.skillName(faker.job().keySkills())
+//									.skillDescription(faker.job().keySkills())
+//									.type(SkillType.TECHNICAL_SKILL)
+//									.build();
+//							Skill saveSkill = skillRepository.save(skill);
 //
-//						JobSkillId jobSkillId = JobSkillId.builder()
-//								.jobId(saveJob)
-//								.skillId(saveSkill)
-//								.build();
+//							JobSkillId jobSkillId = JobSkillId.builder()
+//									.jobId(saveJob)
+//									.skillId(saveSkill)
+//									.build();
 //
-//						JobSkill jobSkill = JobSkill.builder()
-//								.id(jobSkillId)
-//								.skillLevel(SkillLevel.PROFESSIONAL)
-//								.moreInfos(faker.job().keySkills())
-//								.build();
+//							JobSkill jobSkill = JobSkill.builder()
+//									.id(jobSkillId)
+//									.skillLevel(SkillLevel.PROFESSIONAL)
+//									.moreInfos(faker.job().keySkills())
+//									.build();
 //
-//						jobSkillRepository.save(jobSkill);
+//							jobSkillRepository.save(jobSkill);
+//						}
 //					}
 //				}
 //

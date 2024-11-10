@@ -36,7 +36,7 @@ public class Company {
     private Address address;
 
     @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "address", nullable = false)
+    @JoinColumn(name = "account", nullable = false)
     private Account account;
 
 }

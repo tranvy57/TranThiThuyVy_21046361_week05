@@ -21,4 +21,12 @@ public class JobServiceImpl implements JobService {
         PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
         return jobRepository.findJobsByCompanyId(companyId, pageRequest);
     }
+
+    @Override
+    public Page<Job> getAllJobs(int pageNo, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
+        return jobRepository.findAll(pageRequest);
+    }
+
+
 }

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-@RequestMapping("/company")
+@RequestMapping("/companies")
 public class CompanyControllers {
     @Autowired
     CompanyService companyService;
