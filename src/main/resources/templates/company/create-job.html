@@ -1,39 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Job</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Thêm Công Việc Mới</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-
 <div class="container mt-5">
-  <h2 class="text-center">Create New Job</h2>
+  <h2 class="text-center mb-4">Thêm Công Việc Mới</h2>
+  <form action="/jobs/add" method="post">
 
-  <!-- Form để tạo công việc mới -->
-  <form action="/companies/createJob" method="post">
+    <!-- Vị trí tuyển dụng -->
     <div class="mb-3">
-      <label for="jobName" class="form-label">Job Name</label>
-      <input type="text" class="form-control" id="jobName" name="jobName" required th:value="${job.jobName}">
+      <label for="jobName" class="form-label">Vị trí tuyển dụng</label>
+      <input type="text" class="form-control" id="jobName" name="jobName" placeholder="Nhập vị trí tuyển dụng">
     </div>
 
+    <!-- Mô tả công việc -->
     <div class="mb-3">
-      <label for="jobDesc" class="form-label">Job Description</label>
-      <textarea class="form-control" id="jobDesc" name="jobDesc" rows="5" required th:value="${job.jobDesc}"></textarea>
+      <label for="jobDesc" class="form-label">Mô tả công việc</label>
+      <textarea class="form-control" id="jobDesc" name="jobDesc" rows="4" placeholder="Nhập mô tả công việc"></textarea>
     </div>
 
-
+    <!-- Kỹ năng yêu cầu -->
     <div class="mb-3">
-      <label for="jobSkills" class="form-label">Job Skills</label>
-      <input type="text" class="form-control" id="jobSkills" name="jobSkills" placeholder="Enter skills separated by commas" required>
+      <label class="form-label">Kỹ năng yêu cầu</label>
+      <div id="skillsContainer">
+        <!-- Các thẻ select cho kỹ năng -->
+        <div class="input-group mb-2">
+          <select class="form-select skillSelect" name="skills[]">
+            <option value="" selected disabled>Chọn kỹ năng</option>
+            <!-- Lặp qua danh sách skills để tạo các option -->
+            <option th:each="skill : ${skills}" th:value="${skill.id}" th:text="${skill.skillName}">Kỹ năng</option>
+          </select>
+          <select class="form-select skillLevelSelect" name="skillLevels[]">
+            <option value="BEGINNER">Beginner</option>
+            <option value="INTERMEDIATE">Intermediate</option>
+            <option value="ADVANCED">Advanced</option>
+            <option value="PROFESSIONAL">Professional</option>
+            <option value="MASTER">Master</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Nút thêm kỹ năng -->
+      <button type="button" class="btn btn-success" onclick="addSkillRow()">+ Thêm Kỹ Năng</button>
     </div>
 
-    <button type="submit" class="btn btn-primary">Create Job</button>
+    <!-- Nút thêm công việc -->
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Thêm công việc</button>
+    </div>
   </form>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
+  // Giả định skills nhận từ backend
+  var skills = /*[[${skills}]]*/ [];  // Danh sách skills nhận từ controller
+
+  // Hàm thêm dòng kỹ năng mới
+  function addSkillRow() {
+    var skillRow = document.createElement("div");
+    skillRow.classList.add("input-group", "mb-2");
+
+    // Tạo thẻ select cho kỹ năng
+    var skillSelect = document.createElement("select");
+    skillSelect.classList.add("form-select", "skillSelect");
+    skillSelect.name = "skills[]";
+
+    // Thêm các option vào select thông qua innerHTML
+    skillSelect.innerHTML = `
+      <option value="" selected disabled>Chọn kỹ năng</option>
+      ${skills.map(function(skill) {
+      return `<option value="${skill.id}">${skill.skillName}</option>`;
+    }).join('')}
+    `;
+
+    // Tạo select cho mức độ kỹ năng
+    var skillLevelSelect = document.createElement("select");
+    skillLevelSelect.classList.add("form-select", "skillLevelSelect");
+    skillLevelSelect.name = "skillLevels[]";
+
+    // Thêm các option vào select mức độ kỹ năng
+    var levels = ["BEGINNER", "INTERMEDIATE", "ADVANCED", "PROFESSIONAL", "MASTER"];
+    skillLevelSelect.innerHTML = levels.map(function(level) {
+      return `<option value="${level}">${level}</option>`;
+    }).join('');
+
+    // Nút xóa dòng kỹ năng
+    var removeBtn = document.createElement("button");
+    removeBtn.classList.add("btn", "btn-danger");
+    removeBtn.type = "button";
+    removeBtn.textContent = "Xóa";
+    removeBtn.onclick = function() {
+      skillRow.remove();
+    };
+
+    // Thêm các phần tử vào dòng kỹ năng
+    skillRow.appendChild(skillSelect);
+    skillRow.appendChild(skillLevelSelect);
+    skillRow.appendChild(removeBtn);
+
+    document.getElementById("skillsContainer").appendChild(skillRow);
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
 </html>

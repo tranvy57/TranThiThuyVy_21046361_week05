@@ -89,7 +89,7 @@
         <nav>
             <ul class="pagination">
                 <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                    <a th:href="@{/jobs( size=${jobPage.size}, page=${pageNumber})}"
+                    <a th:href="@{/companies( size=${jobPage.size}, page=${pageNumber})}"
                        th:text="${pageNumber}"
                        class="page-link"
                        th:classappend="${pageNumber == jobPage.number + 1} ? 'active'"

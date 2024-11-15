@@ -2,8 +2,10 @@ package iuh.fit.zy_week05.frontend.controllers;
 
 import iuh.fit.zy_week05.backend.entities.Company;
 import iuh.fit.zy_week05.backend.entities.Job;
+import iuh.fit.zy_week05.backend.entities.Skill;
 import iuh.fit.zy_week05.backend.services.CompanyService;
 import iuh.fit.zy_week05.backend.services.JobService;
+import iuh.fit.zy_week05.backend.services.SkillService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,8 @@ public class CompanyControllers {
     CompanyService companyService;
     @Autowired
     JobService jobService;
+    @Autowired
+    SkillService skillService;
 
     @RequestMapping("")
     public ModelAndView companyDetail(@RequestParam("page") Optional<Integer> page,
@@ -74,9 +78,12 @@ public class CompanyControllers {
 
 
 
-    @RequestMapping(value = "/createJob", method = RequestMethod.POST)
-    public ModelAndView createJob(@ModelAttribute Job job){
+    @RequestMapping(value = "/createJob")
+    public ModelAndView createJob(){
+        List<Skill> skills = skillService.getAllSkills();
+
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("skills", skills);
         modelAndView.setViewName("company/create-job");
         return modelAndView;
     }
