@@ -2,11 +2,16 @@ package iuh.fit.zy_week05.frontend.controllers;
 
 import iuh.fit.zy_week05.backend.entities.Company;
 import iuh.fit.zy_week05.backend.entities.Job;
+import iuh.fit.zy_week05.backend.entities.JobSkill;
 import iuh.fit.zy_week05.backend.entities.Skill;
+import iuh.fit.zy_week05.backend.enums.SkillLevel;
+import iuh.fit.zy_week05.backend.ids.JobSkillId;
 import iuh.fit.zy_week05.backend.services.CompanyService;
 import iuh.fit.zy_week05.backend.services.JobService;
+import iuh.fit.zy_week05.backend.services.JobSkillService;
 import iuh.fit.zy_week05.backend.services.SkillService;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -18,6 +23,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Slf4j
 @Controller
 @RequestMapping("/companies")
 public class CompanyControllers {
@@ -27,6 +33,8 @@ public class CompanyControllers {
     JobService jobService;
     @Autowired
     SkillService skillService;
+    @Autowired
+    JobSkillService jobSkillService;
 
     @RequestMapping("")
     public ModelAndView companyDetail(@RequestParam("page") Optional<Integer> page,
@@ -79,12 +87,45 @@ public class CompanyControllers {
 
 
     @RequestMapping(value = "/createJob")
-    public ModelAndView createJob(){
+    public ModelAndView showJobPage(){
         List<Skill> skills = skillService.getAllSkills();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("skills", skills);
         modelAndView.setViewName("company/create-job");
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/createJob", method = RequestMethod.POST)
+    public ModelAndView createJob(@ModelAttribute Job job, @RequestParam List<Long> skills,        // Danh sách kỹ năng (ID kỹ năng)
+                                  @RequestParam List<String> skillLevels, HttpSession session){        // Danh sách cấp độ kỹ năng
+
+//        log.info("Job saved: " + job);
+//        log.info("Skills: " + skills);
+//        log.info("Skill levels: " + skillLevels);
+
+        Company company = (Company) session.getAttribute("loggedInUser");
+        job.setCompany(company);
+        Job newJob = jobService.saveJob(job);
+
+        JobSkill jobSkill = new JobSkill();
+        JobSkillId jobSkillId = new JobSkillId();
+        jobSkillId.setJobId(newJob);
+
+        for (int i = 0; i < skills.size(); i++){
+            Skill skill = skillService.getSkillById(skills.get(i));
+            jobSkillId.setSkillId(skill);
+            jobSkill.setId(jobSkillId);
+            jobSkill.setSkillLevel(SkillLevel.valueOf(skillLevels.get(i)));
+            jobSkillService.createJobSkill(jobSkill);
+
+        }
+
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("redirect:/companies/getListJob");
         return modelAndView;
     }
 }

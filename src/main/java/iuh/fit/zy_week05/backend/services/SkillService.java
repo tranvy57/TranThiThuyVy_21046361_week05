@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface SkillService{
     List<Skill> getAllSkills();
+    Skill getSkillById(Long id);
 }

@@ -22,7 +22,7 @@ public class Job {
     @Column(name = "job_desc", nullable = false, length = 2000)
     private String jobDesc;
 
-    @Column(name = "job_name", nullable = false)
+    @Column(name = "job_name")
     private String jobName;
 
     @ManyToOne(fetch = FetchType.LAZY)
