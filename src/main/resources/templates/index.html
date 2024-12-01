@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         /* Background and container styling */
         body {
             background-color: #f0f2f5;
             font-family: Arial, sans-serif;
         }
+
         .container {
             max-width: 600px;
             background-color: #ffffff;
@@ -44,6 +46,7 @@
         .form-label {
             color: #444;
         }
+
         .form-control {
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -59,35 +62,74 @@
             transition: background-color 0.3s;
             font-weight: bold;
         }
+
         .btn-primary:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-<div class="container">
+<div class="">
+
+
+    <!--    menu-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Z-work</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navb  arNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/companies">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/companies/getListJob">Công ty của tôi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Tìm ứng cử viên </a>
+                    </li>
+                </ul>
+            </div>
+
+            <a href="/login">
+                <input type="button" class="btn btn-outline-primary me-2" value="Đăng nhập">
+            </a>
+
+            <a href="/register">
+                <input type="button" class="btn btn-outline-primary" value="Đăng ký">
+            </a>
+
+
+        </div>
+    </nav>
+
     <h1 class="text-center mb-4">Welcome to Z-Works</h1>
     <p>Cơ hội nghề nghiệp chào đón bạn</p>
-    <div class="row">
-        <div class="col-12">
-            <h1 class="text-center mb-4">Login</h1>
-            <form action="/account/login" method="post">
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
-            </form>
-            <p th:if="${error}" class="text-danger text-center mt-2">Sai tên đăng nhập hoặc mật khẩu</p>
-            <br>
-            <p>Bạn chưa có tài khoản?</p>
-            <a href="/register" class="text-center">Đăng ký ngay</a>
-        </div>
-    </div>
+    <!--    <div th:replace="menu/companyMenu.html"></div>-->
+
+    <!--    <div class="row">-->
+    <!--        <div class="col-12">-->
+    <!--            <h1 class="text-center mb-4">Login</h1>-->
+    <!--            <form action="/account/login" method="post">-->
+    <!--                <div class="mb-3">-->
+    <!--                    <label for="username" class="form-label">Username</label>-->
+    <!--                    <input type="text" class="form-control" id="username" name="username" required>-->
+    <!--                </div>-->
+    <!--                <div class="mb-3">-->
+    <!--                    <label for="password" class="form-label">Password</label>-->
+    <!--                    <input type="password" class="form-control" id="password" name="password" required>-->
+    <!--                </div>-->
+    <!--                <button type="submit" class="btn btn-primary w-100">Login</button>-->
+    <!--            </form>-->
+    <!--            <p th:if="${error}" class="text-danger text-center mt-2">Sai tên đăng nhập hoặc mật khẩu</p>-->
+    <!--            <br>-->
+    <!--            <p>Bạn chưa có tài khoản?</p>-->
+    <!--            <a href="/register" class="text-center">Đăng ký ngay</a>-->
+    <!--        </div>-->
+    <!--    </div>-->
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"

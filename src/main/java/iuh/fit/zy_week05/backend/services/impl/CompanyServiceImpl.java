@@ -28,7 +28,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company getCompanyByEmail(String email) {
-        return companyRepository.findCompanyByEmail(email);
+        return companyRepository.findByEmail(email);
     }
 
 }

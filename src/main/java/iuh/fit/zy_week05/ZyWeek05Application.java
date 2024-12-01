@@ -4,7 +4,7 @@ import com.neovisionaries.i18n.CountryCode;
 import iuh.fit.zy_week05.backend.entities.*;
 import iuh.fit.zy_week05.backend.enums.SkillLevel;
 import iuh.fit.zy_week05.backend.enums.SkillType;
-import iuh.fit.zy_week05.backend.enums.UserType;
+
 import iuh.fit.zy_week05.backend.ids.JobSkillId;
 import iuh.fit.zy_week05.backend.repositories.*;
 import net.datafaker.Faker;
@@ -33,8 +33,8 @@ public class ZyWeek05Application {
 	CandidateRepository candidateRepository;
 	@Autowired
 	CandidateSkillRepository candidateSkillRepository;
-	@Autowired
-	AccountRepository accountRepository;
+//	@Autowired
+//	AccountRepository accountRepository;
 
 
 

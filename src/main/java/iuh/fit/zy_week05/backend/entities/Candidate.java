@@ -1,5 +1,6 @@
 package iuh.fit.zy_week05.backend.entities;
 
+import iuh.fit.zy_week05.backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,9 @@ public class Candidate {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
@@ -34,9 +38,8 @@ public class Candidate {
     @JoinColumn(name = "address", nullable = false)
     private Address address;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "account", nullable = false)
-    private Account account;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 
 }
