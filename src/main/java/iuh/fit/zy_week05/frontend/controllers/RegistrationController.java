@@ -4,6 +4,7 @@ package iuh.fit.zy_week05.frontend.controllers;
 import com.neovisionaries.i18n.CountryCode;
 import iuh.fit.zy_week05.backend.dtos.CandidateRegisterDto;
 import iuh.fit.zy_week05.backend.dtos.CompanyRegisterDto;
+import iuh.fit.zy_week05.backend.entities.Candidate;
 import iuh.fit.zy_week05.backend.entities.Company;
 import iuh.fit.zy_week05.backend.entities.CustomUserDetails;
 import iuh.fit.zy_week05.backend.services.CompanyService;
@@ -69,19 +70,40 @@ public class RegistrationController {
                     new FieldError("companyRegisterDto", "about", e.getMessage())
             );
         }
-        return "company/registerCompany"; // Sau khi đăng ký thành công, chuyển đến trang login
+        return "company/registerCompany";
     }
 
     @GetMapping("/candidate")
     public String showCandidateRegistrationForm(Model model) {
         model.addAttribute("candidateRegisterDto", new CandidateRegisterDto());
-        return "registerCandidate";  // Chuyển đến form đăng ký ứng viên
+        return "candidate/registerCandidate";  // Chuyển đến form đăng ký ứng viên
     }
 
     @PostMapping("/candidate")
-    public String registerCandidate(@ModelAttribute CandidateRegisterDto candidateRegisterDto) {
-        registrationService.registerCandidate(candidateRegisterDto);  // Gọi service để đăng ký ứng viên
-        return "redirect:/login";  // Sau khi đăng ký thành công, chuyển đến trang login
+    public String registerCandidate(Model model, @Valid @ModelAttribute CandidateRegisterDto candidateRegisterDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "candidate/registerCandidate"; // Trả về trang đăng ký với lỗi
+        }
+        UserDetails user = customUserDetailService.loadUserByUsername(candidateRegisterDto.getEmail());
+        System.out.println("UserDetails"+ user);
+        if (user != null) {
+            bindingResult.addError(
+                    new FieldError("companyRegisterDto", "email", "Gmail này đã được đăng ký")
+            );
+            return "candidate/registerCandidate";
+        }
+
+        try {
+            Candidate candidate = registrationService.registerCandidate(candidateRegisterDto);
+
+            model.addAttribute("candidateRegisterDto", new CandidateRegisterDto());
+            model.addAttribute("success", true);
+        } catch (Exception e) {
+            bindingResult.addError(
+                    new FieldError("candidateRegisterDto", "fullName", e.getMessage())
+            );
+        }
+        return "candidate/registerCandidate";  // Sau khi đăng ký thành công, chuyển đến trang login
     }
 }
 

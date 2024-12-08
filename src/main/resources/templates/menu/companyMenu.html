@@ -1,25 +1,52 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<html xmlns:sec="http://www.thymeleaf.org">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm containerMenu">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Z-work</a>
+        <a class="navbar-brand text-dark" href="/">Z-work</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navb  arNav">
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/companies">Trang chủ</a>
+                    <a class="nav-link text-dark active" aria-current="page" href="/companies">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/companies/getListJob">Công ty của tôi</a>
+                    <a class="nav-link text-dark" href="/companies/getListJob" sec:authorize="hasRole('COMPANY')">Công ty của tôi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Tìm ứng cử viên </a>
+                    <a class="nav-link text-dark" href="#" sec:authorize="hasRole('COMPANY')">Tìm ứng cử viên</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="#" sec:authorize="hasRole('CANDIDATE')">Tìm ứng công việc phù hợp</a>
                 </li>
             </ul>
         </div>
 
+        <div sec:authorize="!isAuthenticated()">
+            <a href="/login">
+                <input type="button" class="btn btn-outline-dark me-2" value="Đăng nhập">
+            </a>
 
-        <h3 th:text="${session.loggedInUser.compName}">User</h3>
+            <a href="/register">
+                <input type="button" class="btn btn-outline-dark" value="Đăng ký">
+            </a>
+        </div>
+
+        <div class="dropdown" sec:authorize="isAuthenticated()">
+            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <span sec:authentication="name"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Cập nhật hồ sơ</a></li>
+                <li><a class="dropdown-item" href="#">Kinh nghiệm làm việc</a></li>
+
+                <li><a class="dropdown-item" href="#">
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Đăng xuất">
+                    </form>
+                </a></li>
+            </ul>
+        </div>
     </div>
 </nav>

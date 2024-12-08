@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Đăng Ký Công Ty</title>
+    <title>Đăng Ký Ứng Viên</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         body {
@@ -26,22 +26,21 @@
 <body>
 
 <div class="container">
-    <h1>Đăng Ký Công Ty</h1>
+    <h1>Đăng Ký Ứng Viên</h1>
 
     <div th:if="${success}" class="alert alert-success alert-dismissible">
-
         <strong>Đăng ký thành công!</strong>
         <a href="/login">Đăng nhập ngay</a>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <form th:action="@{/register/company}" th:object="${companyRegisterDto}" method="post">
+    <form th:action="@{/register/candidate}" th:object="${candidateRegisterDto}" method="post">
         <div class="form-container">
             <!-- Cột trái -->
             <div>
-                <label for="about">Mô tả công ty:</label>
-                <textarea id="about" th:field="*{about}" class="form-control" th:classappend="${#fields.hasErrors('about') ? ' is-invalid' : ''}"></textarea>
-                <span th:if="${#fields.hasErrors('about')}" th:errors="*{about}" class="text-danger"></span>
+                <label for="fullName">Họ và tên:</label>
+                <input id="fullName" th:field="*{fullName}" class="form-control" th:classappend="${#fields.hasErrors('fullName') ? ' is-invalid' : ''}"/>
+                <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" class="text-danger"></span>
             </div>
 
             <div>
@@ -51,15 +50,15 @@
             </div>
 
             <div>
-                <label for="password">Mật khẩu:</label >
+                <label for="password">Mật khẩu:</label>
                 <input id="password" type="password" th:field="*{password}" class="form-control" th:classappend="${#fields.hasErrors('password') ? ' is-invalid' : ''}"/>
                 <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
             </div>
 
             <div>
-                <label for="compName">Tên công ty:</label>
-                <input id="compName" th:field="*{compName}" class="form-control" th:classappend="${#fields.hasErrors('compName') ? ' is-invalid' : ''}"/>
-                <span th:if="${#fields.hasErrors('compName')}" th:errors="*{compName}" class="text-danger"></span>
+                <label for="dob">Ngày sinh:</label>
+                <input id="dob" type="date" th:field="*{dob}" class="form-control" th:classappend="${#fields.hasErrors('dob') ? ' is-invalid' : ''}"/>
+                <span th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}" class="text-danger"></span>
             </div>
 
             <div>
@@ -68,6 +67,7 @@
                 <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger"></span>
             </div>
 
+            <!-- Cột phải -->
             <div>
                 <label for="street">Địa chỉ đường:</label>
                 <input id="street" th:field="*{street}" class="form-control" th:classappend="${#fields.hasErrors('street') ? ' is-invalid' : ''}"/>
@@ -80,13 +80,6 @@
                 <span th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" class="text-danger"></span>
             </div>
 
-            <!-- Cột phải -->
-            <div>
-                <label for="webUrl">Website:</label>
-                <input id="webUrl" th:field="*{webUrl}" class="form-control" th:classappend="${#fields.hasErrors('webUrl') ? ' is-invalid' : ''}"/>
-                <span th:if="${#fields.hasErrors('webUrl')}" th:errors="*{webUrl}" class="text-danger"></span>
-            </div>
-
             <div>
                 <label for="city">Thành phố:</label>
                 <input id="city" th:field="*{city}" class="form-control" th:classappend="${#fields.hasErrors('city') ? ' is-invalid' : ''}"/>
@@ -96,10 +89,9 @@
             <div>
                 <label for="country">Quốc gia:</label>
                 <select id="country" th:field="*{country}" class="form-control" th:classappend="${#fields.hasErrors('country') ? ' is-invalid' : ''}">
-                    <option value="" disabled selected>Choose a country</option>
+                    <option value="" disabled selected>Chọn quốc gia</option>
                     <option th:each="country : ${countries}"
-                            th:value="${country}"
-                            th:text="${country.getName()}">Country</option>
+                            th:value="${country}" th:text="${country}">Quốc gia</option>
                 </select>
                 <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="text-danger"></span>
             </div>

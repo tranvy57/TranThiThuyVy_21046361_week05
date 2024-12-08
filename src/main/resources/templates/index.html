@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
@@ -72,42 +73,15 @@
 <div class="">
 
 
-    <!--    menu-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Z-work</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navb  arNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/companies">Trang chủ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/companies/getListJob">Công ty của tôi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Tìm ứng cử viên </a>
-                    </li>
-                </ul>
-            </div>
-
-            <a href="/login">
-                <input type="button" class="btn btn-outline-primary me-2" value="Đăng nhập">
-            </a>
-
-            <a href="/register">
-                <input type="button" class="btn btn-outline-primary" value="Đăng ký">
-            </a>
+        <div th:replace="menu/companyMenu.html"></div>
 
 
-        </div>
-    </nav>
 
-    <h1 class="text-center mb-4">Welcome to Z-Works</h1>
-    <p>Cơ hội nghề nghiệp chào đón bạn</p>
+    <div th:if="${pageContent == 'home'}" th:replace="~{home :: homeContent}" sec:authorize="!isAuthenticated()"></div>
+    <div th:if="${pageContent == 'candidate'}" th:replace="~{candidate/candidate :: candidateContent}"  sec:authorize="hasRole('ROLE_CANDIDATE')"></div>
+    <div th:if="${pageContent == 'company'}" th:replace="~{company/company :: companyContent}"  sec:authorize="hasRole('ROLE_COMPANY')"></div>
+
+
     <!--    <div th:replace="menu/companyMenu.html"></div>-->
 
     <!--    <div class="row">-->

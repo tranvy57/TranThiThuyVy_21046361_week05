@@ -15,17 +15,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/register/company", "error.html").permitAll()
-//                        .anyRequest().authenticated()
-                                .anyRequest().permitAll()
-                ).formLogin(form ->
-                        form.defaultSuccessUrl("/", true)
+                .csrf(
+                        csrf -> csrf.disable()
+                )  // Kích hoạt CSRF mặc định
+                .httpBasic(Customizer.withDefaults()) // Bật Basic Auth (tùy chọn)
+                
+                .formLogin(form -> form
+
+                        .defaultSuccessUrl("/", true)
+                        .permitAll()
                 )
-                .logout(config -> config.logoutSuccessUrl("/"));
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/**", "/home", "/register/**", "/error", "/css/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/") // Redirect after logout
+                        .permitAll() // Allow access to the logout functionality for everyone
+                );
+
 
         return http.build();
     }

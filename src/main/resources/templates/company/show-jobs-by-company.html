@@ -93,14 +93,18 @@
         a.btn.btn-primary:hover {
             background-color: #0056b3;
         }
+
+        .container1 {
+            max-width: 1500px;
+            margin: auto;
+            padding: 30px;
+            background-color: #fff;
+        }
     </style>
 </head>
 <body>
-<div class="container">
-
-    <!-- Menu navigation -->
-    <div th:replace="menu/companyMenu.html"></div>
-
+<div th:replace="menu/companyMenu.html"></div>
+<div class="container1">
 
     <!-- Job listing title and button -->
     <div>
@@ -109,13 +113,19 @@
     </div>
 
     <!-- Job cards -->
-    <div class="d-flex flex-wrap" style="gap: 20px;">
+    <div class="d-flex flex-wrap justify-content-center" style="gap: 20px;">
         <div th:each="job : ${jobPage}" class="job-card">
-            <h3 class="job-title" th:text="${job.jobName}"></h3>
-            <p th:text="${job.jobDesc}" class="job-desc"></p>
+            <div style="display: flex; justify-content: space-between">
+                <h3 class="job-title" th:text="${job.jobName}">Tên công việc</h3>
+                <p th:text="${#strings.substring(job.createdDate.toString(), 0, 10)}"></p>
+            </div>
+
+
+
+
             <div class="d-flex flex-wrap" style="gap: 8px;">
-                <div th:each="skill: ${job.jobSkills}" class="skill-badge">
-                    <span th:text="${skill.id.skillId.skillName}"></span>
+                <div th:each="skill : ${job.jobSkills}" class="skill-badge">
+                    <span th:text="${skill.id.skillId.skillName}">Kỹ năng</span>
                 </div>
             </div>
         </div>

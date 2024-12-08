@@ -47,11 +47,8 @@ public class CompanyRegisterDto {
 
     private CountryCode country;
 
-    @NotNull(message = "Số nhà không được để trống")
     private String number;
 
-    @NotNull(message = "Mã bưu điện không được để trống")
-    @Size(min = 5, max = 7, message = "Mã bưu điện phải có độ dài từ 5 đến 7 ký tự")
     private String zipcode;
 
 }

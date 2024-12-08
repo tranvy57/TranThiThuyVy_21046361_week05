@@ -1,5 +1,6 @@
 package iuh.fit.zy_week05.backend.services;
 
+
 import iuh.fit.zy_week05.backend.dtos.CandidateRegisterDto;
 import iuh.fit.zy_week05.backend.dtos.CompanyRegisterDto;
 import iuh.fit.zy_week05.backend.entities.Address;
@@ -10,6 +11,7 @@ import iuh.fit.zy_week05.backend.repositories.AddressRepository;
 import iuh.fit.zy_week05.backend.repositories.CandidateRepository;
 import iuh.fit.zy_week05.backend.repositories.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,9 @@ public class RegistrationService {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     public Company registerCompany(CompanyRegisterDto dtoCompanyRegistration) {
@@ -42,7 +47,7 @@ public class RegistrationService {
         Company company = Company.builder()
                 .about(dtoCompanyRegistration.getAbout())
                 .email(dtoCompanyRegistration.getEmail())
-                .password(dtoCompanyRegistration.getPassword())
+                .password(passwordEncoder.encode(dtoCompanyRegistration.getPassword()))
                 .compName(dtoCompanyRegistration.getCompName())
                 .phone(dtoCompanyRegistration.getPhone())
                 .webUrl(dtoCompanyRegistration.getWebUrl())
@@ -70,7 +75,7 @@ public class RegistrationService {
         Candidate candidate = Candidate.builder()
                 .dob(dto.getDob())
                 .email(dto.getEmail())
-                .password(dto.getPassword())
+                .password(passwordEncoder.encode(dto.getPassword()))
                 .fullName(dto.getFullName())
                 .phone(dto.getPhone())
                 .role(Role.CANDIDATE) // Set role cho candidate

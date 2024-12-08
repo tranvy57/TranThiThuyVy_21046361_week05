@@ -42,4 +42,6 @@ public class Candidate {
     private Role role;
 
 
+
+
 }

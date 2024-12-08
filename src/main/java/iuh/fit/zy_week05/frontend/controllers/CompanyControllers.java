@@ -1,5 +1,7 @@
 package iuh.fit.zy_week05.frontend.controllers;
 
+import iuh.fit.zy_week05.backend.dtos.JobDetailDto;
+import iuh.fit.zy_week05.backend.dtos.JobDto;
 import iuh.fit.zy_week05.backend.entities.Company;
 import iuh.fit.zy_week05.backend.entities.Job;
 import iuh.fit.zy_week05.backend.entities.JobSkill;
@@ -15,9 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,13 +64,13 @@ public class CompanyControllers {
     }
 
     @RequestMapping("/getListJob")
-    public ModelAndView showJobByCompany( @RequestParam("page") Optional<Integer> page,
-                                      @RequestParam("size") Optional<Integer> size, HttpSession session){
+    public ModelAndView showJobByCompany(@RequestParam("page") Optional<Integer> page,
+                                         @RequestParam("size") Optional<Integer> size, Principal principal){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("company/show-jobs-by-company");
 
-        Company company = (Company) session.getAttribute("loggedInUser");
-        Long id = company.getId();
+
+        Long id = companyService.getCompanyByEmail(principal.getName()).getId();
 
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(6);
@@ -84,48 +88,34 @@ public class CompanyControllers {
         return modelAndView;
     }
 
-
-
-    @RequestMapping(value = "/createJob")
-    public ModelAndView showJobPage(){
-        List<Skill> skills = skillService.getAllSkills();
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("skills", skills);
-        modelAndView.setViewName("company/create-job");
-        return modelAndView;
+    @GetMapping("/getListJob/{jobId}")
+    public String getJobDetail(@PathVariable Long jobId, Model model) {
+        JobDetailDto jobDetailDto = jobService.getJobDetail(jobId);
+        model.addAttribute("jobDetail", jobDetailDto);
+        return "job/jobDetail"; //
     }
 
 
-    @RequestMapping(value = "/createJob", method = RequestMethod.POST)
-    public ModelAndView createJob(@ModelAttribute Job job, @RequestParam List<Long> skills,        // Danh sách kỹ năng (ID kỹ năng)
-                                  @RequestParam List<String> skillLevels, HttpSession session){        // Danh sách cấp độ kỹ năng
 
-//        log.info("Job saved: " + job);
-//        log.info("Skills: " + skills);
-//        log.info("Skill levels: " + skillLevels);
-
-        Company company = (Company) session.getAttribute("loggedInUser");
-        job.setCompany(company);
-        Job newJob = jobService.saveJob(job);
-
-        JobSkill jobSkill = new JobSkill();
-        JobSkillId jobSkillId = new JobSkillId();
-        jobSkillId.setJobId(newJob);
-
-        for (int i = 0; i < skills.size(); i++){
-            Skill skill = skillService.getSkillById(skills.get(i));
-            jobSkillId.setSkillId(skill);
-            jobSkill.setId(jobSkillId);
-            jobSkill.setSkillLevel(SkillLevel.valueOf(skillLevels.get(i)));
-            jobSkillService.createJobSkill(jobSkill);
-
-        }
-
-
-        ModelAndView modelAndView = new ModelAndView();
-
-        modelAndView.setViewName("redirect:/companies/getListJob");
-        return modelAndView;
+    @GetMapping("/createJob")
+    public ModelAndView createJobPage(Model model) {
+        model.addAttribute("job", new JobDto());
+        model.addAttribute("skills", skillService.getAllSkills());
+        return new ModelAndView("company/create-job");
     }
+
+    @PostMapping("/createJob")
+    public ModelAndView createJob(@ModelAttribute JobDto job, Principal principal) {
+
+        // Lấy ID công ty từ email người dùng đăng nhập
+        Long companyId = companyService.getCompanyByEmail(principal.getName()).getId();
+        job.setCompanyId(companyId);
+
+        // Lưu job và điều hướng đến danh sách công việc
+        jobService.saveJob(job);
+
+        return new ModelAndView("redirect:/companies/getListJob");
+    }
+
+
 }
