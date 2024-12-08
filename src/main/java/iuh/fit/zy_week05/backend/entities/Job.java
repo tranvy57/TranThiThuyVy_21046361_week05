@@ -29,7 +29,7 @@ public class Job {
     @Column(name = "job_name")
     private String jobName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company")
     private Company company;
 

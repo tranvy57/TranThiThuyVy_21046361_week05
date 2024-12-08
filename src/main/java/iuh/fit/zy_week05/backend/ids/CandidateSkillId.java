@@ -27,6 +27,7 @@ public class CandidateSkillId implements Serializable {
     @JoinColumn(name = "skill_id", nullable = false)
     private Skill skillId;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

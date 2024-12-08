@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -41,7 +42,8 @@ public class Candidate {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-
+    @OneToMany(mappedBy = "id.canId", fetch = FetchType.EAGER)
+    private List<CandidateSkill> candidateSkills;
 
 
 }

@@ -27,6 +27,7 @@ public class CustomUserDetailService implements UserDetailsService {
             return new CustomUserDetails(company.getEmail(), company.getPassword(), company.getRole());
         }
 
+
         Candidate candidate = candidateRepository.findByEmail(username);
         if (candidate != null) {
             return new CustomUserDetails(candidate.getEmail(), candidate.getPassword(), candidate.getRole());
