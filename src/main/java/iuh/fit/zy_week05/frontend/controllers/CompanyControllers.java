@@ -1,7 +1,9 @@
 package iuh.fit.zy_week05.frontend.controllers;
 
+import iuh.fit.zy_week05.backend.dtos.CandidateRecommendResponse;
 import iuh.fit.zy_week05.backend.dtos.JobDetailDto;
 import iuh.fit.zy_week05.backend.dtos.JobDto;
+import iuh.fit.zy_week05.backend.dtos.ListCandidateRecommendByJob;
 import iuh.fit.zy_week05.backend.entities.Company;
 import iuh.fit.zy_week05.backend.entities.Job;
 import iuh.fit.zy_week05.backend.entities.JobSkill;
@@ -12,6 +14,7 @@ import iuh.fit.zy_week05.backend.services.CompanyService;
 import iuh.fit.zy_week05.backend.services.JobService;
 import iuh.fit.zy_week05.backend.services.JobSkillService;
 import iuh.fit.zy_week05.backend.services.SkillService;
+import iuh.fit.zy_week05.backend.services.impl.CandidateRecommendationService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,8 @@ public class CompanyControllers {
     SkillService skillService;
     @Autowired
     JobSkillService jobSkillService;
+    @Autowired
+    CandidateRecommendationService recommendationService;
 
     @RequestMapping("")
     public ModelAndView companyDetail(@RequestParam("page") Optional<Integer> page,
@@ -115,6 +120,19 @@ public class CompanyControllers {
         jobService.saveJob(job);
 
         return new ModelAndView("redirect:/companies/getListJob");
+    }
+
+    @GetMapping("/candidate-recommendations")
+    public String getCandidateRecommendationsForCompany(Model model, Principal principal) {
+        // Lấy danh sách công việc và ứng viên phù hợp
+        Company company = companyService.getCompanyByEmail(principal.getName());
+        List<ListCandidateRecommendByJob> jobRecommendations = recommendationService
+                .getCandidatesForCompanyJobs(company);
+
+        // Truyền danh sách vào model
+        model.addAttribute("jobRecommendations", jobRecommendations);
+
+        return "company/recommendCandidates";  // Giao diện Thymeleaf
     }
 
 

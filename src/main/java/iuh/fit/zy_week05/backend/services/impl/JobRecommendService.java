@@ -68,7 +68,7 @@ public class JobRecommendService {
 
             // Nếu có ít nhất một kỹ năng phù hợp, thêm công việc vào danh sách gợi ý
             if (!matchedSkills.isEmpty()) {
-                recommendations.add(new JobRecommendResponse(job.getId(), matchedSkills, missedSkills));
+                recommendations.add(new JobRecommendResponse(job, matchedSkills, missedSkills));
             }
         }
 

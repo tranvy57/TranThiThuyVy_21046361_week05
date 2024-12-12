@@ -45,5 +45,8 @@ public class Candidate {
     @OneToMany(mappedBy = "id.canId", fetch = FetchType.EAGER)
     private List<CandidateSkill> candidateSkills;
 
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.EAGER)
+    private List<Experience> experiences;
+
 
 }

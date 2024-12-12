@@ -6,6 +6,7 @@ import iuh.fit.zy_week05.backend.enums.Role;
 import iuh.fit.zy_week05.backend.enums.SkillLevel;
 import iuh.fit.zy_week05.backend.enums.SkillType;
 
+import iuh.fit.zy_week05.backend.ids.CandidateSkillId;
 import iuh.fit.zy_week05.backend.ids.JobSkillId;
 import iuh.fit.zy_week05.backend.repositories.*;
 import iuh.fit.zy_week05.backend.services.RegistrationService;
@@ -48,10 +49,11 @@ public class ZyWeek05Application {
 
 
 
-//	@Bean
-//	CommandLineRunner initData(AddressRepository addressRepository){
-//		Faker faker = new Faker();
-//		return args -> {
+
+	@Bean
+	CommandLineRunner initData(AddressRepository addressRepository){
+		Faker faker = new Faker();
+		return args -> {
 //				for(int i = 0; i < 10; i++){
 //					Address address = Address.builder()
 //							.city(faker.address().city())
@@ -112,7 +114,55 @@ public class ZyWeek05Application {
 //					}
 //				}
 //
-//		};
-//	}
+
+//			for (int i=0; i<10; i++){
+//
+//				Address address = Address.builder()
+//						.city(faker.address().city())
+//						.country(CountryCode.VN)
+//						.zipcode(faker.address().zipCode())
+//						.street(faker.address().streetName())
+//						.number(faker.address().buildingNumber())
+//						.build();
+//
+//				Address saveAdd = addressRepository.save(address);
+//
+//				Candidate candidate = Candidate.builder()
+//						.dob(faker.date().birthday().toLocalDateTime().toLocalDate())
+//						.email(faker.internet().emailAddress())
+//						.password(passwordEncoder.encode("12345678"))
+//						.fullName(faker.name().fullName())
+//						.phone(faker.phoneNumber().cellPhone())
+//						.address(saveAdd)
+//						.role(Role.CANDIDATE)
+//						.build();
+//
+//				Candidate saveCandidate = candidateRepository.save(candidate);
+//
+//				for (int j = 0; j < 3; j++) {
+//
+//					Skill kill = skillRepository.findById((long) faker.number().numberBetween(1, 30)).get();
+//					CandidateSkillId candidateSkillId = CandidateSkillId.builder()
+//							.canId(saveCandidate)
+//							.skillId(kill)
+//							.build();
+//
+//					CandidateSkill candidateSkill = CandidateSkill.builder()
+//							.id(candidateSkillId)
+//							.skillLevel(SkillLevel.PROFESSIONAL)
+//							.moreInfos(faker.job().keySkills())
+//							.build();
+//					candidateSkillRepository.save(candidateSkill);
+//
+//
+//
+//				}
+//			}
+		};
+
+
+
+
+	}
 
 }

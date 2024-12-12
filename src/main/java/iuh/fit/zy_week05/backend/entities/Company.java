@@ -4,6 +4,8 @@ import iuh.fit.zy_week05.backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,6 +40,9 @@ public class Company {
     @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "address", nullable = false)
     private Address address;
+
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
+    private List<Job> job;
 
     @Enumerated(EnumType.STRING)
     private Role role;

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Đề xuất ứng cử viên</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Đặt font và chiều rộng của toàn bộ trang */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        /* Container chính */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Tiêu đề chính */
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* Card công việc */
+        .job-card {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .job-card h2 {
+            font-size: 1.8em;
+            color: #5c6bc0;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .job-card p {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* Tiêu đề danh sách ứng viên */
+        h3 {
+            font-size: 1.5em;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        /* Card ứng viên */
+        .candidate-card {
+            background-color: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-right: 20px;
+            margin-bottom: 10px;
+            width: 250px;
+        }
+
+        .candidate-card h4 {
+            font-size: 1.3em;
+            color: #00796b;
+            margin-bottom: 5px;
+        }
+
+        .candidate-card p {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        /* Danh sách kỹ năng */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            background-color: #eeeeee;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+            color: #333;
+        }
+
+        /* Nhấn mạnh các kỹ năng đã có và chưa có */
+        strong {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        /* Nút mời ứng cử viên */
+        .invite-btn {
+            margin-top: 10px;
+            background-color: #00796b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        .invite-btn:hover {
+            background-color: #004d40;
+        }
+
+        /* Nút mở/đóng danh sách ứng viên */
+        .toggle-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 1.5em;
+            color: #5c6bc0;
+            cursor: pointer;
+        }
+
+        /* Đảm bảo danh sách ứng viên hiển thị theo hàng ngang */
+        .candidate-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            .job-card {
+                padding: 15px;
+            }
+
+            .candidate-card {
+                padding: 15px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="menu/companyMenu.html"></div>
+<div class="container">
+    <h4>Đề xuất ứng cử viên cho các công việc của bạn</h4>
+
+    <div th:each="jobRecommendation : ${jobRecommendations}">
+        <div class="job-card">
+            <!-- Job title with toggle button -->
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 th:text="${jobRecommendation.job.jobName}"></h2>
+                <button class="toggle-btn" data-bs-toggle="collapse"
+                        data-bs-target="#candidates-${jobRecommendation.job.id}"
+                        aria-expanded="false" aria-controls="candidates-${jobRecommendation.job.id}">
+                    <span class="collapse-btn">&#62;</span>
+                </button>
+            </div>
+            <p th:text="${jobRecommendation.job.jobDesc}"></p>
+
+            <!-- Candidate list with collapse functionality -->
+            <div id="candidates-${jobRecommendation.job.id}" class="collapse">
+                <h3>Ứng cử viên phù hợp:</h3>
+                <div class="candidate-list">
+                    <div th:each="candidateResponse : ${jobRecommendation.candidateRecommendResponses}">
+                        <div class="candidate-card">
+                            <h4 th:text="${candidateResponse.candidate.fullName}"></h4>
+                            <p th:text="${candidateResponse.candidate.email}"></p>
+
+                            <strong>Kỹ năng phù hợp:</strong>
+                            <ul>
+                                <li th:each="skill : ${candidateResponse.matchedSkills}" th:text="${skill.skillName}"></li>
+                            </ul>
+
+                            <strong>Kỹ năng thiếu:</strong>
+                            <ul>
+                                <li th:each="skill : ${candidateResponse.missedSkills}" th:text="${skill.skillName}"></li>
+                            </ul>
+
+                            <!-- Button to invite candidate -->
+                            <button class="invite-btn">Mời</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,22 +1,21 @@
 package iuh.fit.zy_week05.backend.dtos;
 
+import iuh.fit.zy_week05.backend.entities.Candidate;
 import iuh.fit.zy_week05.backend.entities.Job;
-import iuh.fit.zy_week05.backend.entities.JobSkill;
 import iuh.fit.zy_week05.backend.entities.Skill;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobRecommendResponse {
-    private Job job;
+@Builder
+public class CandidateRecommendResponse {
+    private Candidate candidate;
     private List<Skill> matchedSkills;
     private List<Skill> missedSkills;
 }
-
