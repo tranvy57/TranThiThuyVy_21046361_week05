@@ -154,6 +154,16 @@
 <div class="container">
     <h4>Đề xuất ứng cử viên cho các công việc của bạn</h4>
 
+    <!-- Hiển thị thông báo thành công -->
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <span th:text="${successMessage}"></span>
+    </div>
+
+    <!-- Hiển thị thông báo lỗi -->
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
     <div th:each="jobRecommendation : ${jobRecommendations}">
         <div class="job-card">
             <!-- Job title with toggle button -->
@@ -186,8 +196,11 @@
                                 <li th:each="skill : ${candidateResponse.missedSkills}" th:text="${skill.skillName}"></li>
                             </ul>
 
-                            <!-- Button to invite candidate -->
-                            <button class="invite-btn">Mời</button>
+                            <form th:action="@{/companies/send-email}" method="post">
+                                <input type="hidden" name="candidateEmail" th:value="${candidateResponse.candidate.email}" />
+                                <input type="hidden" name="jobId" th:value="${jobRecommendation.job.id}" />
+                                <button type="submit" class="invite-btn">Mời</button>
+                            </form>
                         </div>
                     </div>
                 </div>

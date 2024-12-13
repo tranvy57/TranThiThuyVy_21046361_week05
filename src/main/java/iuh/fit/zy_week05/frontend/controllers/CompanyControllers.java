@@ -10,10 +10,7 @@ import iuh.fit.zy_week05.backend.entities.JobSkill;
 import iuh.fit.zy_week05.backend.entities.Skill;
 import iuh.fit.zy_week05.backend.enums.SkillLevel;
 import iuh.fit.zy_week05.backend.ids.JobSkillId;
-import iuh.fit.zy_week05.backend.services.CompanyService;
-import iuh.fit.zy_week05.backend.services.JobService;
-import iuh.fit.zy_week05.backend.services.JobSkillService;
-import iuh.fit.zy_week05.backend.services.SkillService;
+import iuh.fit.zy_week05.backend.services.*;
 import iuh.fit.zy_week05.backend.services.impl.CandidateRecommendationService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +41,9 @@ public class CompanyControllers {
     JobSkillService jobSkillService;
     @Autowired
     CandidateRecommendationService recommendationService;
+
+    @Autowired
+    EmailService emailService;
 
     @RequestMapping("")
     public ModelAndView companyDetail(@RequestParam("page") Optional<Integer> page,
@@ -133,6 +133,27 @@ public class CompanyControllers {
         model.addAttribute("jobRecommendations", jobRecommendations);
 
         return "company/recommendCandidates";  // Giao diện Thymeleaf
+    }
+
+    @PostMapping("/send-email")
+    public String sendEmail(@RequestParam String candidateEmail, @RequestParam Long jobId, Model model, Principal principal) {
+        try {
+            // Gửi email mời
+            emailService.sendInvitationEmail(candidateEmail, jobId);
+            model.addAttribute("successMessage", "Email đã được gửi thành công!");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Có lỗi khi gửi email.");
+        }
+
+
+        Company company = companyService.getCompanyByEmail(principal.getName());
+        List<ListCandidateRecommendByJob> jobRecommendations = recommendationService
+                .getCandidatesForCompanyJobs(company);
+
+        // Truyền danh sách vào model
+        model.addAttribute("jobRecommendations", jobRecommendations);
+
+        return "company/recommendCandidates";
     }
 
 
