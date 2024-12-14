@@ -1,9 +1,7 @@
 package iuh.fit.zy_week05.backend.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -11,7 +9,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "experience")
+@Builder
 public class Experience {
     @Id
     @Column(name = "exp_id") @GeneratedValue(strategy = GenerationType.IDENTITY)

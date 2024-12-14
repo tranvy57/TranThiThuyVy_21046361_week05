@@ -18,7 +18,7 @@
                     <a class="nav-link text-dark" href="/companies/candidate-recommendations" sec:authorize="hasRole('COMPANY')">Tìm ứng cử viên</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="/candidates/recommendJobs" sec:authorize="hasRole('CANDIDATE')">Tìm ứng công việc phù hợp</a>
+                    <a class="nav-link text-dark" href="/candidates/recommendJobs" sec:authorize="hasRole('CANDIDATE')">Tìm công việc phù hợp</a>
                 </li>
             </ul>
         </div>
@@ -40,6 +40,7 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="#">Cập nhật hồ sơ</a></li>
                 <li><a class="dropdown-item" href="/candidates/skills">Kỹ năng ứng cử viên</a></li>
+                <li><a class="dropdown-item" href="/candidates/experiences">Kinh nghiệm làm việc</a></li>
 
                 <li><a class="dropdown-item" href="#">
                     <form th:action="@{/logout}" method="post">

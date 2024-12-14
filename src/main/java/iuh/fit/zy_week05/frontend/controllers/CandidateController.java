@@ -1,12 +1,14 @@
 package iuh.fit.zy_week05.frontend.controllers;
 
 import iuh.fit.zy_week05.backend.dtos.CreateCandidateSkillRequest;
+import iuh.fit.zy_week05.backend.dtos.ExperienceDto;
 import iuh.fit.zy_week05.backend.dtos.JobRecommendResponse;
 import iuh.fit.zy_week05.backend.entities.Candidate;
 import iuh.fit.zy_week05.backend.entities.CandidateSkill;
 import iuh.fit.zy_week05.backend.enums.SkillLevel;
 import iuh.fit.zy_week05.backend.repositories.SkillRepository;
 import iuh.fit.zy_week05.backend.services.CandidateSkillService;
+import iuh.fit.zy_week05.backend.services.ExperienceService;
 import iuh.fit.zy_week05.backend.services.SkillService;
 import iuh.fit.zy_week05.backend.services.impl.CandidateService;
 import iuh.fit.zy_week05.backend.services.impl.JobRecommendService;
@@ -36,8 +38,11 @@ public class CandidateController {
     @Autowired
     private JobRecommendService jobRecommendationService;
 
+    @Autowired
+    private ExperienceService experienceService;
+
     @GetMapping("/skills")
-    public String showWorkExperience( Model model, Principal principal) {
+    public String showSkill( Model model, Principal principal) {
         Candidate candidate = candidateService.getCandidateByEmail(principal.getName());
         List<CandidateSkill> candidateSkills = candidate.getCandidateSkills();
         model.addAttribute("candidateSkills", candidateSkills);
@@ -70,6 +75,21 @@ public class CandidateController {
         return "redirect:/candidates/skills";  // Redirect to the same page or a success page
     }
 
+    @GetMapping("/experiences")
+    public String showWorkExperience( Model model, Principal principal) {
+        Candidate candidate = candidateService.getCandidateByEmail(principal.getName());
+        model.addAttribute("experiences", experienceService.getExperienceCandidate(candidate.getId()));
+        return "candidate/experiences";
+    }
+
+    @PostMapping("/experiences/addExperience")
+    public String addExperience(@ModelAttribute ExperienceDto experience, Principal principal) {
+        Candidate candidate = candidateService.getCandidateByEmail(principal.getName());
+
+        experienceService.addExperience(experience, candidate.getId());
+        return "redirect:/candidates/experiences";
+    }
+
 
     @GetMapping("/recommendJobs")
     public String getJobRecommendations(Model model, Principal principal) {
@@ -84,5 +104,15 @@ public class CandidateController {
 
         return "candidate/recommendJobs"; // Trả về trang "recommendJobs" trong thư mục "candidate"
     }
+
+
+    @GetMapping("/profile")
+    public String showProfile(Model model, Principal principal) {
+        Candidate candidate = candidateService.getCandidateByEmail(principal.getName());
+        model.addAttribute("candidate", candidate);
+        return "candidate/profile";
+    }
+
+
 }
 
