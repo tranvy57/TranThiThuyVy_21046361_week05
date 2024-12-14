@@ -19,10 +19,11 @@ public class SecurityConfig {
                         csrf -> csrf.disable()
                 )  // Kích hoạt CSRF mặc định
                 .httpBasic(Customizer.withDefaults()) // Bật Basic Auth (tùy chọn)
-                
-                .formLogin(form -> form
 
+                .formLogin(form -> form
+                        .loginPage("/login")
                         .defaultSuccessUrl("/", true)
+                        .failureUrl("/login?error=true")
                         .permitAll()
                 )
                 .authorizeHttpRequests(auth -> auth

@@ -12,6 +12,10 @@
             padding: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+        a {
+            text-decoration: none;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -23,31 +27,34 @@
     <div th:if="${recommendList != null && !recommendList.isEmpty()}">
         <div class="row g-4">
             <div th:each="job : ${recommendList}" class="col-md-4">
-                <div class="job-card">
-                    <h4 class="fw-bold text-dark">
-                        Vị trí: <span th:text="${job.job.getJobName()}" class="text-info"></span>
-                    </h4>
-                    <p>
-                        <strong>Công ty:</strong>
-                        <span th:text="${job.job.getCompany().compName}" class="text-secondary"></span>
-                    </p>
+<!--                <a th:href="@{/candidates/profile/{email}(email=${candidateResponse.email})}">-->
+                <a th:href="@{/companies/getListJob/{jobId}(jobId=${job.job.getId()})}">
+                    <div class="job-card">
+                        <h4 class="fw-bold text-dark">
+                            Vị trí: <span th:text="${job.job.getJobName()}" class="text-info"></span>
+                        </h4>
+                        <p>
+                            <strong>Công ty:</strong>
+                            <span th:text="${job.job.getCompany().compName}" class="text-secondary"></span>
+                        </p>
 
-                    <div class="mt-3">
-                        <p><strong>Kỹ năng phù hợp:</strong></p>
-                        <ul class="list-unstyled d-flex flex-wrap gap-2">
-                            <li th:each="skill : ${job.matchedSkills}" th:text="${skill.skillName}"
-                                class="badge bg-success p-2"></li>
-                        </ul>
-                    </div>
+                        <div class="mt-3">
+                            <p><strong>Kỹ năng phù hợp:</strong></p>
+                            <ul class="list-unstyled d-flex flex-wrap gap-2">
+                                <li th:each="skill : ${job.matchedSkills}" th:text="${skill.skillName}"
+                                    class="badge bg-success p-2"></li>
+                            </ul>
+                        </div>
 
-                    <div class="mt-3">
-                        <p><strong>Kỹ năng thiếu:</strong></p>
-                        <ul class="list-unstyled d-flex flex-wrap gap-2">
-                            <li th:each="skill : ${job.missedSkills}" th:text="${skill.skillName}"
-                                class="badge bg-danger p-2"></li>
-                        </ul>
+                        <div class="mt-3">
+                            <p><strong>Kỹ năng thiếu:</strong></p>
+                            <ul class="list-unstyled d-flex flex-wrap gap-2">
+                                <li th:each="skill : ${job.missedSkills}" th:text="${skill.skillName}"
+                                    class="badge bg-danger p-2"></li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>

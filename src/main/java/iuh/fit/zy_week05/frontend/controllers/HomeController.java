@@ -49,20 +49,13 @@ public class HomeController {
         return modelAndView;
     }
 
-//    @GetMapping({"/", "/home"})
-//    public String showHomePage(Model model, Principal principal) {
-//        if (principal != null) {
-//            String username = principal.getName();
-//            model.addAttribute("username", username);
-//
-//
-//        } else {
-//            model.addAttribute("message", "Please log in");
-//            model.addAttribute("pageContent", "home"); // Default to home page if not logged in
-//        }
-//
-//        return "index"; // The index page
-//    }
+    @GetMapping("/login")
+    public String loginPage(Model model, String error) {
+        if (error != null) {
+            model.addAttribute("error", true);
+        }
+        return "login";
+    }
 
 
 }

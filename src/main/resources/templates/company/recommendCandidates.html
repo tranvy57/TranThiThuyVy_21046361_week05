@@ -180,7 +180,9 @@
                     <span class="collapse-btn">&#62;</span>
                 </button>
             </div>
-            <p th:text="${jobRecommendation.job.jobDesc}"></p>
+            <p th:text="${#temporals.format(jobRecommendation.job.expiredDate, 'yyyy-MM-dd')}"></p>
+
+
 
             <!-- Candidate list with collapse functionality -->
             <div id="candidates-${jobRecommendation.job.id}" class="collapse">
