@@ -6,4 +6,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CandidateService {
     Candidate getCandidateByEmail(String email);
+    Candidate getCandidateById(Long id);
 }

@@ -147,6 +147,11 @@
                 width: 100%;
             }
         }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -182,26 +187,28 @@
                 <h3>Ứng cử viên phù hợp:</h3>
                 <div class="candidate-list">
                     <div th:each="candidateResponse : ${jobRecommendation.candidateRecommendResponses}">
-                        <div class="candidate-card">
-                            <h4 th:text="${candidateResponse.candidate.fullName}"></h4>
-                            <p th:text="${candidateResponse.candidate.email}"></p>
+                        <a th:href="@{/candidates/profile/{email}(email=${candidateResponse.candidate.email})}">
+                            <div class="candidate-card">
+                                <h4 th:text="${candidateResponse.candidate.fullName}"></h4>
+                                <p th:text="${candidateResponse.candidate.email}"></p>
 
-                            <strong>Kỹ năng phù hợp:</strong>
-                            <ul>
-                                <li th:each="skill : ${candidateResponse.matchedSkills}" th:text="${skill.skillName}"></li>
-                            </ul>
+                                <strong>Kỹ năng phù hợp:</strong>
+                                <ul>
+                                    <li th:each="skill : ${candidateResponse.matchedSkills}" th:text="${skill.skillName}"></li>
+                                </ul>
 
-                            <strong>Kỹ năng thiếu:</strong>
-                            <ul>
-                                <li th:each="skill : ${candidateResponse.missedSkills}" th:text="${skill.skillName}"></li>
-                            </ul>
+                                <strong>Kỹ năng thiếu:</strong>
+                                <ul>
+                                    <li th:each="skill : ${candidateResponse.missedSkills}" th:text="${skill.skillName}"></li>
+                                </ul>
 
-                            <form th:action="@{/companies/send-email}" method="post">
-                                <input type="hidden" name="candidateEmail" th:value="${candidateResponse.candidate.email}" />
-                                <input type="hidden" name="jobId" th:value="${jobRecommendation.job.id}" />
-                                <button type="submit" class="invite-btn">Mời</button>
-                            </form>
-                        </div>
+                                <form th:action="@{/companies/send-email}" method="post">
+                                    <input type="hidden" name="candidateEmail" th:value="${candidateResponse.candidate.email}" />
+                                    <input type="hidden" name="jobId" th:value="${jobRecommendation.job.id}" />
+                                    <button type="submit" class="invite-btn">Mời</button>
+                                </form>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

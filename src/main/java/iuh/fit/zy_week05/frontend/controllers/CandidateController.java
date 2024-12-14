@@ -106,9 +106,10 @@ public class CandidateController {
     }
 
 
-    @GetMapping("/profile")
-    public String showProfile(Model model, Principal principal) {
-        Candidate candidate = candidateService.getCandidateByEmail(principal.getName());
+    @GetMapping("/profile/{email}")
+    public String showProfile(Model model, @PathVariable String email) {
+
+        Candidate candidate = candidateService.getCandidateByEmail(email);
         model.addAttribute("candidate", candidate);
         return "candidate/profile";
     }
